@@ -169,7 +169,7 @@ COPY --from=ts-deps --chown=dograh:dograh /ts_validator/node_modules ./api/mcp_s
 # (search_dograh_docs / fetch_dograh_doc) so agents can learn Dograh.
 COPY --chown=dograh:dograh ./docs ./docs
 
-ENV PYTHONPATH=/app
+ENV PYTHONPATH=/app:/app/api
 
 # Disable file logging in Docker - logs go to stdout for docker logs
 ENV LOG_TO_FILE=false
@@ -180,4 +180,4 @@ USER dograh
 EXPOSE 8000
 
 # Run the FastAPI app with uvicorn
- CMD ["sh", "-c", "python -c 'import app' || (echo \"---IMPORT FAILED---\" && python -c 'import app' ) && uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
+CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
