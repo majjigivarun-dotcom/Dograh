@@ -180,4 +180,4 @@ USER dograh
 EXPOSE 8000
 
 # Run the FastAPI app with uvicorn
- CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
+ CMD ["sh", "-c", "python -c 'import app' || (echo \"---IMPORT FAILED---\" && python -c 'import app' ) && uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
