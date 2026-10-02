@@ -180,4 +180,5 @@ USER dograh
 EXPOSE 8000
 
 # Run the FastAPI app with uvicorn
+WORKDIR /app/api
 CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
