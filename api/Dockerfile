@@ -180,4 +180,4 @@ USER dograh
 EXPOSE 8000
 
 # Run the FastAPI app with uvicorn
-CMD ["./scripts/start_services_docker.sh"]
+   CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-10000}"]
