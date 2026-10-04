@@ -27,7 +27,10 @@ fi
 ### 2) Run migrations
 ###############################################################################
 
-alembic -c "$BASE_DIR/api/alembic.ini" upgrade head
+echo "Running alembic migration..."
+export SYNC_URL=$(echo "$DATABASE_URL" | sed 's/asyncpg/psycopg2/g' | sed 's/postgresql:/postgresql+psycopg2:/g')
+DATABASE_URL=$SYNC_URL alembic -c "$BASE_DIR/api/alembic.ini" upgrade head
+echo "Migration done!"
 
 ###############################################################################
 ### 3) Signal handling — forward TERM/INT to children for clean docker stop
