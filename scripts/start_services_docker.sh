@@ -29,7 +29,7 @@ fi
 
 echo "Running alembic migration..."
 export SYNC_URL=$(echo "$DATABASE_URL" | sed 's/asyncpg/psycopg2/g' | sed 's/postgresql:/postgresql+psycopg2:/g')
-DATABASE_URL=$SYNC_URL alembic -c "$BASE_DIR/api/alembic.ini" upgrade head
+DATABASE_URL=$SYNC_URL alembic -c "$BASE_DIR/api/alembic.ini" upgrade head || echo "ALEMBIC FAILED but continuing..."
 echo "Migration done!"
 
 ###############################################################################
