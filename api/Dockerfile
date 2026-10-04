@@ -181,4 +181,4 @@ EXPOSE 8000
 
 # Run the FastAPI app with uvicorn
 WORKDIR /app/api
-CMD ["sh", "-c", "uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
+CMD ["sh", "-c", "pip install psycopg2-binary -q; SYNC_URL=$(echo $DATABASE_URL | sed 's/+asyncpg//g' | sed 's/postgresql:/postgresql+psycopg2:/g'); DATABASE_URL=$SYNC_URL alembic upgrade head; uvicorn app:app --host 0.0.0.0 --port ${PORT:-10000}"]
