@@ -61,6 +61,11 @@ BACKEND_API_ENDPOINT = (
 UI_APP_URL = os.getenv("UI_APP_URL", "http://localhost:3010")
 
 DATABASE_URL = os.environ["DATABASE_URL"]
+# FIX: Render gives postgres:// but we need async
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql+asyncpg://", 1)
+if DATABASE_URL.startswith("postgresql://") and "asyncpg" not in DATABASE_URL and "psycopg" not in DATABASE_URL:
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
 REDIS_URL = os.environ["REDIS_URL"]
 
 DEPLOYMENT_MODE = os.getenv("DEPLOYMENT_MODE", "oss")
